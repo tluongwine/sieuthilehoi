@@ -1395,6 +1395,7 @@ function ManagerFlow({ me, onLogout }) {
     const [schedule, setSchedule] = useState(null);
     const [reward, setReward] = useState(null);
     const [showInbox, setShowInbox] = useState(false);
+    const [showNotif, setShowNotif] = useState(false);
     const [show86, setShow86] = useState(false);
     const [showIncident, setShowIncident] = useState(false);
     const [showPlans, setShowPlans] = useState(false);
@@ -1573,6 +1574,8 @@ function ManagerFlow({ me, onLogout }) {
         return React.createElement(StaffDetail, { emp: staffView.emp, reports: rangeReports, period: period, setPeriod: setPeriod, canEdit: caps.staffEdit, onBack: () => setStaffView(null), onEdit: () => setStaffView({ mode: "form", emp: staffView.emp }), onDelete: () => deleteStaff(staffView.emp.id), onOpenReport: (r) => setOpenReport(r) });
     if (caps.staffEdit && staffView && staffView.mode === "form")
         return React.createElement(StaffForm, { initial: staffView.emp, onCancel: () => setStaffView(staffView.emp ? { mode: "detail", emp: staffView.emp } : null), onSave: saveStaff });
+    if (showNotif)
+        return React.createElement(NotifCenter, { reports: scopedReports, onBack: () => setShowNotif(false), onOpenReport: (r) => setOpenReport(r) });
     if (showInbox)
         return React.createElement(IssueInbox, { reports: scopedReports, resolved: resolved, onToggle: toggleIssue, onBack: () => setShowInbox(false), onOpenReport: (r) => setOpenReport(r) });
     if (show86)
@@ -1627,9 +1630,8 @@ function ManagerFlow({ me, onLogout }) {
                 React.createElement("span", { style: { width: 18, height: 3, borderRadius: 9, background: "#7E2E92" } }),
                 React.createElement("span", { style: { width: 18, height: 3, borderRadius: 9, background: "#7E2E92" } })),
             React.createElement("img", { src: ASSET + "logo_header_badge.png", alt: "Festival Market", "data-nozoom": "1", style: { position: "absolute", left: "50%", top: -20, transform: "translateX(-50%)", height: 96, objectFit: "contain", filter: "drop-shadow(0 5px 10px rgba(0,0,0,.32))", zIndex: 5, pointerEvents: "none" } }),
-            React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, flexShrink: 0 } }, React.createElement("button", { onClick: () => setShowAcct(true), "aria-label": "Tai khoan", style: { display: "flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,.92)", border: "none", borderRadius: 16, padding: "6px 9px 6px 6px", cursor: "pointer", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 16px rgba(0,0,0,.12)", flexShrink: 0 } },
-                roleAvatar(me, 46),
-                React.createElement(KeyRound, { size: 22, color: "#7E2E92" })), React.createElement("button", { onClick: () => setShowInbox(true), "aria-label": "Thong bao", style: { position: "relative", width: 50, height: 50, borderRadius: "50%", border: "none", cursor: "pointer", background: "radial-gradient(circle at 38% 30%, #fff, #EAF6DC)", display: "grid", placeItems: "center", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 14px rgba(0,0,0,.12)", flexShrink: 0 } },
+            React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, flexShrink: 0 } }, React.createElement("button", { onClick: () => setShowAcct(true), "aria-label": "Tai khoan", style: { display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255,255,255,.92)", border: "none", borderRadius: 14, padding: "9px 11px", cursor: "pointer", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 16px rgba(0,0,0,.12)", flexShrink: 0 } },
+                React.createElement(KeyRound, { size: 24, color: "#7E2E92" })), React.createElement("button", { onClick: () => setShowNotif(true), "aria-label": "Thong bao", style: { position: "relative", width: 50, height: 50, borderRadius: "50%", border: "none", cursor: "pointer", background: "radial-gradient(circle at 38% 30%, #fff, #EAF6DC)", display: "grid", placeItems: "center", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 14px rgba(0,0,0,.12)", flexShrink: 0 } },
                 React.createElement(Bell, { size: 24, color: C.gold }),
                 ((scopedReports || []).filter((r) => r && r.incident && !r.reviewed).length) > 0 && React.createElement("span", { style: { position: "absolute", top: -3, right: -3, minWidth: 22, height: 22, padding: "0 5px", borderRadius: 11, background: C.coral, color: "#fff", fontSize: 12.5, fontWeight: 800, display: "grid", placeItems: "center", border: "3px solid #fff", lineHeight: 1 } }, (scopedReports || []).filter((r) => r && r.incident && !r.reviewed).length)))),
         React.createElement("div", { style: { background: "#FFF8E6", borderRadius: 22, padding: "24px 16px 20px", marginTop: 16, border: "1.5px solid #F0E4C6", boxShadow: "0 10px 26px rgba(60,20,70,.18)", position: "relative" } },
@@ -2776,11 +2778,11 @@ function OverviewBody({ me, reports, staff, target, onSetTarget, onOpenReport, s
                 React.createElement("span", { style: { display: "block", fontSize: 12.5, color: "#9A4A4A" } }, incidentsOpen.length + " s\u1EF1 c\u1ED1 ch\u01B0a x\u1EED l\u00FD. Ch\u1EA1m \u0111\u1EC3 xem chi ti\u1EBFt.")),
             React.createElement(ChevronRight, { size: 18, color: C.coral })),
         React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 13, background: "linear-gradient(135deg, #FBA740 0%, #F4801E 100%)", borderRadius: 20, padding: "15px 15px", marginBottom: 16, color: "#fff", boxShadow: "0 5px 0 rgba(176,84,18,.32), 0 10px 22px rgba(244,123,32,.32)" } },
-            React.createElement("span", { style: { width: 52, height: 58, flexShrink: 0, display: "grid", placeItems: "center", color: "#fff", fontFamily: "'Montserrat', system-ui, sans-serif", fontWeight: 800, fontSize: 27, background: "#E0473B", clipPath: "polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)", boxShadow: "inset 0 3px 4px rgba(255,255,255,.35), inset 0 -4px 6px rgba(0,0,0,.2)" } }, (me.name || "?").trim().charAt(0).toUpperCase()),
+            roleAvatar(me, 90),
             React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                 React.createElement("span", { style: { display: "block", fontFamily: "'Montserrat', system-ui, sans-serif", fontWeight: 800, fontSize: 20, lineHeight: 1.05, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", textShadow: "0 2px 2px rgba(150,60,10,.35)" } }, me.name),
                 React.createElement("span", { style: { display: "block", fontWeight: 700, fontSize: 12.5, color: "#FFF1DF", marginTop: 1 } }, (posById(me.posId) || {}).name || "Quản lý")),
-            (function () { var _c = codeInfo(rosterShiftOf(me) || ""); return React.createElement("span", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 1, fontFamily: "'Montserrat', system-ui, sans-serif", whiteSpace: "nowrap", background: "rgba(255,255,255,.95)", borderRadius: 13, padding: "7px 13px", boxShadow: "0 3px 8px rgba(0,0,0,.14)" } }, React.createElement("span", { style: { fontWeight: 800, fontSize: 14, color: "#7A3B05" } }, (_c && _c.working) ? ("\u2600\uFE0F Ca " + _c.code) : "\uD83D\uDDD3\uFE0F Ch\u01B0a x\u1EBFp ca"), (_c && _c.working) ? React.createElement("span", { style: { fontSize: 11.5, fontWeight: 700, color: "#B5722A" } }, _c.start + "-" + _c.end) : null); })()),
+            (function () { var _c = codeInfo(rosterShiftOf(me) || ""); return React.createElement("button", { onClick: function () { if (onOpenRoster) onOpenRoster(); }, style: { border: "none", cursor: "pointer", display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 1, fontFamily: "'Montserrat', system-ui, sans-serif", whiteSpace: "nowrap", background: "rgba(255,255,255,.95)", borderRadius: 13, padding: "7px 13px", boxShadow: "0 3px 8px rgba(0,0,0,.14)" } }, React.createElement("span", { style: { fontWeight: 800, fontSize: 14, color: "#7A3B05" } }, (_c && _c.working) ? ("\u2600\uFE0F Ca " + _c.code) : "\uD83D\uDDD3\uFE0F Ch\u01B0a x\u1EBFp ca"), (_c && _c.working) ? React.createElement("span", { style: { fontSize: 11.5, fontWeight: 700, color: "#B5722A" } }, _c.start + "-" + _c.end) : null); })()),
         onOpenMyShift && (() => {
             const tIso = todayIso();
             const myCode = (me && roster && roster[me.id]) ? roster[me.id][tIso] : "";
@@ -2824,6 +2826,24 @@ function OverviewBody({ me, reports, staff, target, onSetTarget, onOpenReport, s
             React.createElement("span", { style: { fontSize: 12.5, fontWeight: 800, color: "#6B4A78", textAlign: "center", lineHeight: 1.15 } }, it[0]))))));
 }
 /* Issue inbox across all reports, with status */
+function NotifCenter({ reports, onBack, onOpenReport }) {
+    const list = (reports || []).slice().sort((a, b) => (b.submittedAt || "").localeCompare(a.submittedAt || ""));
+    return (React.createElement("div", { className: "fade", style: { padding: "20px 18px 30px" } },
+        React.createElement(TopBar, { title: "Th\u00F4ng b\u00E1o", subtitle: list.length + " ho\u1EA1t \u0111\u1ED9ng g\u1EA7n \u0111\u00E2y", onBack: onBack }),
+        list.length === 0 ? React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: "1.5px dashed " + C.line, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
+            React.createElement(Bell, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
+            React.createElement("p", { style: { color: C.inkSoft, fontSize: 14 } }, "Ch\u01B0a c\u00F3 th\u00F4ng b\u00E1o n\u00E0o.")) :
+        React.createElement("div", { style: { display: "grid", gap: 10 } }, list.map((r) => {
+            const dt = new Date(r.submittedAt);
+            const inc = !!r.incident;
+            return React.createElement("button", { key: r.id, onClick: () => onOpenReport(r), style: { textAlign: "left", width: "100%", display: "flex", alignItems: "center", gap: 12, background: "linear-gradient(180deg,#FFFFFF,#F6FBF8)", border: "1px solid " + C.line, borderRadius: 15, padding: "12px 13px", cursor: "pointer", boxShadow: "0 4px 11px rgba(47,108,70,.10), inset 0 1px 0 rgba(255,255,255,.8)" } },
+                React.createElement("span", { style: { width: 40, height: 40, flexShrink: 0, borderRadius: 12, display: "grid", placeItems: "center", background: inc ? C.coralSoft : C.tealSoft } }, React.createElement(inc ? ShieldAlert : ClipboardList, { size: 20, color: inc ? C.coral : C.teal })),
+                React.createElement("span", { style: { flex: 1, minWidth: 0 } },
+                    React.createElement("span", { style: { display: "block", fontWeight: 700, fontSize: 14.5, color: C.ink } }, inc ? "S\u1EF1 c\u1ED1 \u0111\u01B0\u1EE3c b\u00E1o" : "B\u00E1o c\u00E1o ca m\u1EDBi"),
+                    React.createElement("span", { style: { display: "block", fontSize: 12.5, color: C.inkSoft, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: 2 } }, (r.posName || "") + (r.name ? " \u00B7 " + r.name : "") + " \u00B7 " + dt.toLocaleDateString("vi-VN") + " " + dt.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" }))),
+                React.createElement(ChevronRight, { size: 18, color: C.inkSoft }));
+        }))));
+}
 function IssueInbox({ reports, resolved, onToggle, onBack, onOpenReport }) {
     const [filter, setFilter] = useState("open");
     const all = [];
@@ -4011,7 +4031,7 @@ function RosterView({ me, canEdit, scopeIds, onBack }) {
             React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 } },
                 React.createElement("span", { style: { fontSize: 15, fontWeight: 700, color: C.ink } },
                     dLabel,
-                    isToday ? " · hôm nay" : ""),
+                    isToday ? " · Hôm nay" : ""),
                 !isToday && React.createElement("button", { onClick: () => setDate(todayIso()), style: { ...chipBtn, color: C.teal, borderColor: C.teal } }, "V\u1EC1 h\u00F4m nay")),
             React.createElement("div", { style: { display: "flex", gap: 6, marginBottom: 16, overflowX: "auto", paddingBottom: 4 } }, strip.map((iso) => {
                 const d = parseIso(iso);
