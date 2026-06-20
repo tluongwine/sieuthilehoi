@@ -1006,7 +1006,7 @@ function AccountSettings({ me, onBack }) {
 /* ================= Avatar nhân vật game theo giới tính ================= */
 function staffGender(s) { if (s && (s.gender === "nu" || s.gender === "nam")) return s.gender; const n = (s && s.name) || ""; return /\bThị\b/.test(n) ? "nu" : "nam"; }
 var POS_AVATAR = { sanglap: "avt_chu_sieu_thi.png", quanlynhansu: "avt_quan_ly_nhan_su.png", quanly: "avt_quan_ly_sieu_thi.png", catruong: "avt_ca_truong.png", thungan: "avt_thu_ngan.png", totruongnh: "avt_to_truong.png", bhphithucpham: "avt_ban_hang_phi_tp.png", bhtpcongnghe: "avt_ban_hang_tp_cn.png", bhtptuoisong: "avt_ban_hang_tuoi_song.png", giamdocvh: "avt_giam_doc_van_hanh.png", baove: "avt_bao_ve.png", thukho: "avt_thu_kho.png", nvkho: "avt_nhan_vien_kho.png", beptruong: "avt_bep_truong.png", vesinh: "avt_ve_sinh.png" };
-function roleAvatar(s, size){ var f = s && POS_AVATAR[s.posId]; if(!f) return gameAvatar(staffGender(s), size, s && s.name); return React.createElement("img", { src: ASSET + f, alt: "", "data-nozoom": "1", style: { width: size, height: size, borderRadius: "50%", objectFit: "cover", objectPosition: "center", flexShrink: 0, background: "#fff", boxShadow: "0 2px 6px rgba(0,0,0,.18)" } }); }
+function roleAvatar(s, size){ var f = s && POS_AVATAR[s.posId]; if(!f) return gameAvatar(staffGender(s), size, s && s.name); return React.createElement("img", { src: ASSET + f, alt: "", "data-nozoom": "1", style: { width: size, height: size, objectFit: "contain", flexShrink: 0 } }); }
 function gameAvatar(gender, size, name) {
     size = size || 40;
     const bg = gender === "nu" ? "#B97E18" : "#901020";
@@ -1031,7 +1031,7 @@ function LoginGate({ staff, onPick }) {
             const p = posById(s.posId);
             const lv = levelForPos(s.posId);
             return React.createElement("button", { key: s.id, onClick: () => onPick(s), style: { width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 12, background: "linear-gradient(180deg,#FBEFD2,#F2E2B8)", border: "3px solid #C9923F", borderRadius: 16, padding: "10px 12px", cursor: "pointer", boxShadow: "0 3px 0 rgba(120,80,30,.3)" } },
-                roleAvatar(s, 44),
+                roleAvatar(s, 58),
                 React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                     React.createElement("span", { style: { display: "block", fontWeight: 800, fontSize: 15.5, color: "#4A2F14" } }, s.name),
                     React.createElement("span", { style: { display: "block", fontSize: 12.5, color: "#8A6A3A" } }, p ? p.name : "Chưa gán vị trí")),
@@ -1211,7 +1211,7 @@ function StaffWork({ emp, onLogout }) {
                 React.createElement("button", { onClick: () => setShowInbox && setShowInbox(true), "aria-label": "Thong bao", style: { width: 44, height: 44, borderRadius: "50%", border: "none", cursor: "pointer", background: "#fff", display: "grid", placeItems: "center", flexShrink: 0 } },
                     React.createElement(Bell, { size: 22, color: C.gold }))),
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 14, marginBottom: 16 } },
-                roleAvatar(emp, 62),
+                roleAvatar(emp, 80),
                 React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                     React.createElement("span", { style: { display: "block", fontSize: 14, color: C.inkSoft, fontWeight: 600 } }, "Xin ch\u00E0o"),
                     React.createElement("span", { style: { display: "block", fontWeight: 800, fontSize: 21, color: "#7E2E92", lineHeight: 1.1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, emp.name)),
@@ -1628,7 +1628,7 @@ function ManagerFlow({ me, onLogout }) {
                 React.createElement("span", { style: { width: 18, height: 3, borderRadius: 9, background: "#7E2E92" } })),
             React.createElement("img", { src: ASSET + "logo_header_badge.png", alt: "Festival Market", "data-nozoom": "1", style: { position: "absolute", left: "50%", top: -20, transform: "translateX(-50%)", height: 96, objectFit: "contain", filter: "drop-shadow(0 5px 10px rgba(0,0,0,.32))", zIndex: 5, pointerEvents: "none" } }),
             React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 8, flexShrink: 0 } }, React.createElement("button", { onClick: () => setShowAcct(true), "aria-label": "Tai khoan", style: { display: "flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,.92)", border: "none", borderRadius: 16, padding: "6px 9px 6px 6px", cursor: "pointer", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 16px rgba(0,0,0,.12)", flexShrink: 0 } },
-                roleAvatar(me, 34),
+                roleAvatar(me, 46),
                 React.createElement(KeyRound, { size: 22, color: "#7E2E92" })), React.createElement("button", { onClick: () => setShowInbox(true), "aria-label": "Thong bao", style: { position: "relative", width: 50, height: 50, borderRadius: "50%", border: "none", cursor: "pointer", background: "radial-gradient(circle at 38% 30%, #fff, #EAF6DC)", display: "grid", placeItems: "center", boxShadow: "0 4px 0 rgba(70,110,60,.18), 0 8px 14px rgba(0,0,0,.12)", flexShrink: 0 } },
                 React.createElement(Bell, { size: 24, color: C.gold }),
                 ((scopedReports || []).filter((r) => r && r.incident && !r.reviewed).length) > 0 && React.createElement("span", { style: { position: "absolute", top: -3, right: -3, minWidth: 22, height: 22, padding: "0 5px", borderRadius: 11, background: C.coral, color: "#fff", fontSize: 12.5, fontWeight: 800, display: "grid", placeItems: "center", border: "3px solid #fff", lineHeight: 1 } }, (scopedReports || []).filter((r) => r && r.incident && !r.reviewed).length)))),
@@ -1646,7 +1646,7 @@ function ManagerFlow({ me, onLogout }) {
                     React.createElement(RefreshCw, { size: 13 }),
                     " T\u1EA3i l\u1EA1i")),
             reports === null && React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, padding: "24px 0", textAlign: "center" } }, "\u0110ang t\u1EA3i b\u00E1o c\u00E1o"),
-            shown && shown.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+            shown && shown.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
                 React.createElement(ImageIcon, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
                 React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Ch\u01B0a c\u00F3 b\u00E1o c\u00E1o n\u00E0o."))),
             React.createElement("div", { style: { display: "grid", gap: 10 } }, shown && shown.map((r) => React.createElement(ReportCard, { key: r.id, report: r, onClick: () => setOpenReport(r) }))))) : tab === "menu" ? (React.createElement(React.Fragment, null,
@@ -1690,7 +1690,7 @@ function ReportCard({ report, onClick }) {
     const flags = countFlags(report);
     const d = new Date(report.submittedAt);
     const avg = report.scores ? avgScore(report.scores) : null;
-    return (React.createElement("button", { onClick: onClick, style: { textAlign: "left", width: "100%", background: C.surface, border: `1px solid ${C.line}`, borderRadius: 14, padding: 14, cursor: "pointer", display: "block" } },
+    return (React.createElement("button", { onClick: onClick, style: { textAlign: "left", width: "100%", background: "linear-gradient(180deg,#FFFFFF,#F6FBF8)", border: `1px solid ${C.line}`, borderRadius: 16, padding: 14, cursor: "pointer", display: "block", boxShadow: "0 5px 13px rgba(47,108,70,.10), inset 0 1px 0 rgba(255,255,255,.8)" } },
         React.createElement("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 } },
             React.createElement("div", { style: { minWidth: 0 } },
                 React.createElement("p", { style: { fontWeight: 700, fontSize: 15, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } },
@@ -2065,9 +2065,9 @@ function MenuBody({ dishes, showCost = true, canAdd = true, onOpen, onAdd, onRel
             const on = effCat === val;
             return React.createElement("button", { key: val, onClick: () => setCatSel(val), style: { flexShrink: 0, padding: "7px 13px", borderRadius: 99, fontSize: 12.5, fontWeight: 700, cursor: "pointer", border: `1px solid ${on ? C.teal : C.line}`, background: on ? C.teal : C.surface, color: on ? "#fff" : C.inkSoft } }, lbl);
         }))),
-        list.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+        list.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
             React.createElement(BookOpen, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
-            React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Ch\u01B0a c\u00F3 m\u00F3n n\u00E0o trong m\u1EE5c n\u00E0y."))) : viewList.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+            React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Ch\u01B0a c\u00F3 m\u00F3n n\u00E0o trong m\u1EE5c n\u00E0y."))) : viewList.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
             React.createElement(Search, { size: 28, color: C.inkSoft, style: { marginBottom: 10 } }),
             React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Kh\u00F4ng t\u00ECm th\u1EA5y m\u00F3n ph\u00F9 h\u1EE3p."))) : null,
         cats.map((cat) => (React.createElement("div", { key: cat, style: { marginBottom: 18 } },
@@ -2505,7 +2505,7 @@ function StaffManageBody({ staff, canEdit, onOpen, onAdd, onReload }) {
                 canEdit && React.createElement("button", { onClick: onAdd, style: { ...chipBtn, color: "#fff", background: C.teal, border: "none" } },
                     React.createElement(UserPlus, { size: 14 }),
                     " Th\u00EAm nh\u00E2n vi\u00EAn"))),
-        staff.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+        staff.length === 0 ? (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
             React.createElement(Users, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
             React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Ch\u01B0a c\u00F3 nh\u00E2n vi\u00EAn. B\u1EA5m \"Th\u00EAm nh\u00E2n vi\u00EAn\" \u0111\u1EC3 h\u1ECD \u0111\u0103ng nh\u1EADp b\u1EB1ng t\u00EAn v\u00E0 b\u1EAFt \u0111\u1EA7u n\u1ED9p b\u00E1o c\u00E1o."))) : GROUPS.map((g) => {
             const rows = staff.filter((s) => { const p = posById(s.posId); return p && p.group === g.id; });
@@ -2516,8 +2516,8 @@ function StaffManageBody({ staff, canEdit, onOpen, onAdd, onReload }) {
                 React.createElement("div", { style: { display: "grid", gap: 8 } }, rows.map((s) => {
                     const p = posById(s.posId);
                     const lv = levelForPos(s.posId);
-                    return (React.createElement("button", { key: s.id, onClick: () => onOpen(s), style: { width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 12, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 13, padding: "11px 13px", cursor: "pointer" } },
-                        roleAvatar(s, 40),
+                    return (React.createElement("button", { key: s.id, onClick: () => onOpen(s), style: { width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 12, background: "linear-gradient(180deg,#FFFFFF,#F5FBF8)", border: `1px solid ${C.line}`, borderRadius: 15, padding: "12px 13px", cursor: "pointer", boxShadow: "0 4px 11px rgba(47,108,70,.10), inset 0 1px 0 rgba(255,255,255,.8)" } },
+                        roleAvatar(s, 52),
                         React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                             React.createElement("span", { style: { display: "block", fontWeight: 600, fontSize: 14.5 } }, s.name),
                             React.createElement("span", { style: { display: "block", fontSize: 12, color: C.inkSoft } }, p ? p.name : "Chưa gán vị trí")),
@@ -2548,14 +2548,14 @@ function StaffPerfBody({ staff, reports, period, setPeriod, canEdit, onOpen, onA
                 canEdit && onAdd && React.createElement("button", { onClick: onAdd, style: { ...chipBtn, color: "#fff", background: C.teal, border: "none" } },
                     React.createElement(UserPlus, { size: 14 }),
                     " Th\u00EAm"))),
-        pool.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+        pool.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
             React.createElement(Users, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
             React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Ch\u01B0a c\u00F3 nh\u00E2n vi\u00EAn. Th\u00EAm nh\u00E2n vi\u00EAn \u0111\u1EC3 h\u1ECD \u0111\u0103ng nh\u1EADp b\u1EB1ng t\u00EAn v\u00E0 b\u1EAFt \u0111\u1EA7u n\u1ED9p b\u00E1o c\u00E1o."))),
         React.createElement("div", { style: { display: "grid", gap: 10 } }, ranked.map(({ emp, st }, i) => React.createElement(StaffPerfCard, { key: emp.id, emp: emp, st: st, rank: st.count > 0 ? i + 1 : null, onClick: () => onOpen(emp) })))));
 }
 function StaffPerfCard({ emp, st, rank, onClick }) {
     const p = posById(emp.posId);
-    return (React.createElement("button", { onClick: onClick, style: { width: "100%", textAlign: "left", background: C.surface, border: `1px solid ${C.line}`, borderRadius: 14, padding: 14, cursor: "pointer", display: "block" } },
+    return (React.createElement("button", { onClick: onClick, style: { width: "100%", textAlign: "left", background: "linear-gradient(180deg,#FFFFFF,#F6FBF8)", border: `1px solid ${C.line}`, borderRadius: 16, padding: 14, cursor: "pointer", display: "block", boxShadow: "0 5px 13px rgba(47,108,70,.10), inset 0 1px 0 rgba(255,255,255,.8)" } },
         React.createElement("div", { style: { display: "flex", alignItems: "center", gap: 12 } },
             React.createElement("span", { style: { width: 40, height: 40, borderRadius: "50%", background: C.tealSoft, display: "grid", placeItems: "center", flexShrink: 0, position: "relative" } },
                 p ? React.createElement(p.Icon, { size: 19, color: C.teal }) : React.createElement(UserRound, { size: 19, color: C.teal }),
@@ -2716,7 +2716,7 @@ function isSingleDay(range) { return range.from.toDateString() === startOfDay(ra
 const PERIODS = [{ id: "today", l: "Hôm nay" }, { id: "yesterday", l: "Hôm qua" }, { id: "7days", l: "7 ngày" }, { id: "month", l: "Tháng này" }, { id: "custom", l: "Tùy chọn" }];
 function PeriodPicker({ period, setPeriod }) {
     return (React.createElement("div", { style: { marginBottom: 14 } },
-        React.createElement("div", { style: { display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 } }, PERIODS.map((p) => (React.createElement("button", { key: p.id, onClick: () => setPeriod(p.id === "custom" ? { id: "custom", from: period.from || "", to: period.to || "" } : { id: p.id }), style: { whiteSpace: "nowrap", fontSize: 12.5, fontWeight: 600, padding: "7px 12px", borderRadius: 99, cursor: "pointer", border: `1px solid ${period.id === p.id ? C.teal : C.line}`, background: period.id === p.id ? C.teal : C.surface, color: period.id === p.id ? "#fff" : C.inkSoft } }, p.l)))),
+        React.createElement("div", { style: { display: "flex", gap: 6, overflowX: "auto", paddingBottom: 2 } }, PERIODS.map((p) => (React.createElement("button", { key: p.id, onClick: () => setPeriod(p.id === "custom" ? { id: "custom", from: period.from || "", to: period.to || "" } : { id: p.id }), style: { whiteSpace: "nowrap", fontSize: 12.5, fontWeight: 600, padding: "8px 14px", borderRadius: 99, cursor: "pointer", border: `1px solid ${period.id === p.id ? "transparent" : C.line}`, background: period.id === p.id ? "linear-gradient(180deg,#3FBF5E,#2C9C49)" : "linear-gradient(180deg,#FFFFFF,#F3FAF6)", color: period.id === p.id ? "#fff" : C.inkSoft, fontWeight: 700, boxShadow: period.id === p.id ? "0 4px 11px rgba(44,156,73,.34), inset 0 1px 0 rgba(255,255,255,.45)" : "0 2px 6px rgba(60,40,20,.09), inset 0 1px 0 rgba(255,255,255,.75)" } }, p.l)))),
         period.id === "custom" && (React.createElement("div", { style: { display: "flex", gap: 10, marginTop: 10 } },
             React.createElement("div", { style: { flex: 1 } },
                 React.createElement("span", { style: { display: "block", fontSize: 11.5, color: C.inkSoft, marginBottom: 5 } }, "T\u1EEB ng\u00E0y"),
@@ -2847,7 +2847,7 @@ function IssueInbox({ reports, resolved, onToggle, onBack, onOpenReport }) {
             React.createElement(FilterChip, { active: filter === "open", onClick: () => setFilter("open"), label: "Ch\u01B0a x\u1EED l\u00FD" }),
             React.createElement(FilterChip, { active: filter === "done", onClick: () => setFilter("done"), label: "\u0110\u00E3 x\u1EED l\u00FD" }),
             React.createElement(FilterChip, { active: filter === "all", onClick: () => setFilter("all"), label: "T\u1EA5t c\u1EA3" })),
-        shown.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } },
+        shown.length === 0 && (React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } },
             React.createElement(Inbox, { size: 30, color: C.inkSoft, style: { marginBottom: 10 } }),
             React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, lineHeight: 1.5 } }, "Kh\u00F4ng c\u00F3 v\u1EA5n \u0111\u1EC1 n\u00E0o \u1EDF m\u1EE5c n\u00E0y."))),
         React.createElement("div", { style: { display: "grid", gap: 10 } }, shown.map((it) => {
@@ -2998,7 +2998,7 @@ function PenaltyTicket({ me, staff, scopeIds, onBack }) {
         return (React.createElement("div", { className: "fade", style: { padding: "20px 18px 30px" } },
             React.createElement(TopBar, { title: "Tạo phiếu nhắc nhở / phạt", onBack: () => setMode("list") }),
             React.createElement(Label, null, "Chọn nhân viên"),
-            React.createElement("div", { style: { display: "grid", gap: 8, marginBottom: 16 } }, subs.length === 0 ? React.createElement("p", { style: { color: C.inkSoft, fontSize: 13.5 } }, "Không có nhân viên cấp dưới trong phạm vi của bạn.") : subs.map((s) => { const on = sel && sel.id === s.id; const p = posById(s.posId); return React.createElement("button", { key: s.id, onClick: () => setSel(s), style: { display: "flex", alignItems: "center", gap: 11, textAlign: "left", background: on ? C.tealSoft : C.surface, border: on ? ("2px solid " + C.teal) : ("1px solid " + C.line), borderRadius: 13, padding: "10px 12px", cursor: "pointer" } }, roleAvatar(s, 36), React.createElement("span", { style: { flex: 1, minWidth: 0 } }, React.createElement("span", { style: { display: "block", fontWeight: 700, fontSize: 14.5, color: C.ink } }, s.name), React.createElement("span", { style: { display: "block", fontSize: 12, color: C.inkSoft } }, p ? p.name : ""))); })),
+            React.createElement("div", { style: { display: "grid", gap: 8, marginBottom: 16 } }, subs.length === 0 ? React.createElement("p", { style: { color: C.inkSoft, fontSize: 13.5 } }, "Không có nhân viên cấp dưới trong phạm vi của bạn.") : subs.map((s) => { const on = sel && sel.id === s.id; const p = posById(s.posId); return React.createElement("button", { key: s.id, onClick: () => setSel(s), style: { display: "flex", alignItems: "center", gap: 11, textAlign: "left", background: on ? C.tealSoft : C.surface, border: on ? ("2px solid " + C.teal) : ("1px solid " + C.line), borderRadius: 13, padding: "10px 12px", cursor: "pointer" } }, roleAvatar(s, 46), React.createElement("span", { style: { flex: 1, minWidth: 0 } }, React.createElement("span", { style: { display: "block", fontWeight: 700, fontSize: 14.5, color: C.ink } }, s.name), React.createElement("span", { style: { display: "block", fontSize: 12, color: C.inkSoft } }, p ? p.name : ""))); })),
             React.createElement(Label, null, "Mức"),
             React.createElement("div", { style: { display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 14 } }, PENALTY_LEVELS.map((L) => { const on = lvl.key === L.key; return React.createElement("button", { key: L.key, onClick: () => setLvl(L), style: { fontSize: 13, fontWeight: 700, borderRadius: 10, padding: "8px 13px", cursor: "pointer", border: on ? ("2px solid " + C.coral) : ("1px solid " + C.line), background: on ? C.coralSoft : C.surface, color: on ? C.coral : C.ink } }, L.label + (L.amount ? " · " + fmt(L.amount) + "đ" : "")); })),
             lvl.amount == null && React.createElement("input", { value: custom, inputMode: "numeric", placeholder: "Số tiền phạt (đ)", onChange: (e) => setCustom(e.target.value), style: Object.assign({}, inputStyle, { marginBottom: 14 }) }),
@@ -3848,7 +3848,7 @@ function AuditView({ onBack }) {
     return (React.createElement("div", { className: "fade", style: { padding: "20px 18px 30px" } },
         React.createElement(TopBar, { title: "Lịch sử thay đổi", subtitle: "Ai sửa lịch, thực đơn, đào tạo", onBack: onBack }),
         items === null ? React.createElement("p", { style: { color: C.inkSoft, fontSize: 14, textAlign: "center", padding: "20px 0" } }, "Đang tải") :
-            items.length === 0 ? React.createElement("div", { style: { textAlign: "center", padding: "40px 20px", background: C.surface, borderRadius: 14, border: `1px dashed ${C.line}` } }, React.createElement(Clock, { size: 28, color: C.inkSoft, style: { marginBottom: 10 } }), React.createElement("p", { style: { color: C.inkSoft, fontSize: 14 } }, "Chưa có thay đổi nào được ghi nhận.")) :
+            items.length === 0 ? React.createElement("div", { style: { textAlign: "center", padding: "44px 20px", background: "linear-gradient(180deg,#FFFFFF,#F4FBF7)", borderRadius: 16, border: `1.5px dashed ${C.line}`, boxShadow: "inset 0 2px 9px rgba(60,40,20,.05)" } }, React.createElement(Clock, { size: 28, color: C.inkSoft, style: { marginBottom: 10 } }), React.createElement("p", { style: { color: C.inkSoft, fontSize: 14 } }, "Chưa có thay đổi nào được ghi nhận.")) :
                 React.createElement("div", { style: { display: "grid", gap: 8 } }, items.map((it, i) => React.createElement("div", { key: i, style: { display: "flex", gap: 12, alignItems: "center", background: C.surface, border: `1px solid ${C.line}`, borderRadius: 13, padding: "11px 13px" } },
                     React.createElement("span", { style: { width: 34, height: 34, borderRadius: 10, background: C.tealSoft, display: "grid", placeItems: "center", flexShrink: 0 } }, React.createElement(Clock, { size: 16, color: C.teal })),
                     React.createElement("span", { style: { flex: 1, minWidth: 0 } },
@@ -4062,7 +4062,7 @@ function RosterView({ me, canEdit, scopeIds, onBack }) {
                     const p = posById(s.posId);
                     const code = codeOf(s.id, date);
                     const ci = codeInfo(code);
-                    return (React.createElement("button", { key: s.id, onClick: () => setPicker({ empId: s.id, iso: date }), style: { width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 12, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 13, padding: "11px 13px", cursor: "pointer" } },
+                    return (React.createElement("button", { key: s.id, onClick: () => setPicker({ empId: s.id, iso: date }), style: { width: "100%", textAlign: "left", display: "flex", alignItems: "center", gap: 12, background: "linear-gradient(180deg,#FFFFFF,#F5FBF8)", border: `1px solid ${C.line}`, borderRadius: 15, padding: "12px 13px", cursor: "pointer", boxShadow: "0 4px 11px rgba(47,108,70,.10), inset 0 1px 0 rgba(255,255,255,.8)" } },
                         React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                             React.createElement("span", { style: { display: "block", fontWeight: 600, fontSize: 14.5 } }, s.name),
                             React.createElement("span", { style: { display: "block", fontSize: 12, color: C.inkSoft } },
@@ -4332,7 +4332,7 @@ function GameBills({ me, isManager, onBack }) {
         !done && React.createElement("div", { style: { marginBottom: 14 } },
             React.createElement("div", { style: { fontSize: 13, color: C.inkSoft, marginBottom: 8, fontWeight: 700 } }, "Đã có " + board.length + " người dự đoán"),
             React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8 } }, board.map((e) => React.createElement("div", { key: e.uid, style: { display: "flex", alignItems: "center", gap: 10, background: C.surface, border: "1px solid " + C.line, borderRadius: 12, padding: "8px 12px" } },
-                roleAvatar(e, 34),
+                roleAvatar(e, 44),
                 React.createElement("span", { style: { flex: 1, fontWeight: 700, color: C.ink } }, e.name),
                 React.createElement("span", { style: { fontSize: 17 } }, "🔒"))))),
         done && React.createElement("div", { style: { textAlign: "center", background: "linear-gradient(180deg,#9A41AE,#7E2E92)", color: "#fff", borderRadius: 16, padding: 16, marginBottom: 14 } },
@@ -4340,7 +4340,7 @@ function GameBills({ me, isManager, onBack }) {
             React.createElement("div", { style: { fontSize: 40, fontWeight: 800 } }, rec.actual)),
         done && React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 } }, board.map((e, idx) => React.createElement("div", { key: e.uid, style: { display: "flex", alignItems: "center", gap: 10, background: idx === 0 ? "linear-gradient(180deg,#FFE9A8,#F4C13C)" : C.surface, border: idx === 0 ? "none" : "1px solid " + C.line, color: idx === 0 ? "#5A3410" : C.ink, borderRadius: 12, padding: "9px 12px" } },
             React.createElement("span", { style: { width: 26, textAlign: "center", fontWeight: 800, fontSize: 15 } }, idx === 0 ? "🏆" : (idx + 1)),
-            roleAvatar(e, 36),
+            roleAvatar(e, 46),
             React.createElement("span", { style: { flex: 1, minWidth: 0 } },
                 React.createElement("span", { style: { display: "block", fontWeight: 800, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" } }, e.name),
                 React.createElement("span", { style: { display: "block", fontSize: 12, opacity: .8 } }, "Đoán " + e.guess + " · cách " + Math.abs(e.guess - rec.actual)))))),
@@ -4392,7 +4392,7 @@ function Row({ label, value }) {
         React.createElement("span", { style: { fontWeight: 600, color: C.ink, textAlign: "right" } }, value)));
 }
 function Stat({ Icon, label, value }) {
-    return (React.createElement("div", { style: { flex: 1, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 13, padding: "12px 10px", textAlign: "center" } },
+    return (React.createElement("div", { style: { flex: 1, background: "linear-gradient(180deg,#FFFFFF,#F2FAF5)", border: `1px solid ${C.line}`, borderRadius: 16, padding: "13px 10px", textAlign: "center", boxShadow: "0 5px 13px rgba(47,108,70,.11), inset 0 1px 0 rgba(255,255,255,.85)" } },
         React.createElement(Icon, { size: 17, color: C.teal, style: { margin: "0 auto 5px" } }),
         React.createElement("p", { style: { fontSize: 19, fontWeight: 800, color: C.ink, lineHeight: 1 } }, value),
         React.createElement("p", { style: { fontSize: 11.5, color: C.inkSoft, marginTop: 3 } }, label)));
@@ -4401,7 +4401,7 @@ function PrimaryButton({ children, onClick, disabled }) {
     return React.createElement("button", { onClick: onClick, disabled: disabled, style: { width: "100%", display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8, background: disabled ? "#D8CAB8" : C.teal, color: disabled ? "#fff" : "#1B1714", border: "none", borderRadius: 12, padding: "15px 18px", fontSize: 15.5, fontWeight: 800, cursor: disabled ? "not-allowed" : "pointer", transition: "filter .15s" } }, children);
 }
 const ghostBtn = { display: "block", width: "100%", marginTop: 12, background: "none", border: "none", color: C.inkSoft, fontSize: 14, fontWeight: 600, cursor: "pointer", padding: 8 };
-const chipBtn = { display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12.5, fontWeight: 700, color: C.inkSoft, background: C.surface, border: `1px solid ${C.line}`, borderRadius: 13, padding: "9px 14px", cursor: "pointer" };
+const chipBtn = { display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12.5, fontWeight: 700, color: C.inkSoft, background: "linear-gradient(180deg,#FFFFFF,#F1F8F3)", border: `1px solid ${C.line}`, borderRadius: 13, padding: "9px 14px", cursor: "pointer", boxShadow: "0 3px 8px rgba(60,40,20,.11), inset 0 1px 0 rgba(255,255,255,.8)" };
 const pill = { fontSize: 11.5, fontWeight: 700, padding: "4px 10px", borderRadius: 99, whiteSpace: "nowrap" };
 const inputStyle = { width: "100%", border: `1px solid ${C.line}`, borderRadius: 13, padding: "12px 13px", fontSize: 14.5, color: C.ink, background: C.surface };
 
