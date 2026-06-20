@@ -1042,7 +1042,6 @@ function LoginGate({ staff, onPick }) {
 /* ================= Staff work (logged-in employee) ================= */
 function ShiftReport({ emp, onBack }) {
     const [step, setStep] = useState("run");
-    const [showGame, setShowGame] = useState(false);
     const [checks, setChecks] = useState({});
     const [eos, setEos] = useState({});
     const [kpi, setKpi] = useState({});
@@ -1136,6 +1135,7 @@ function ShiftReport({ emp, onBack }) {
 }
 function StaffWork({ emp, onLogout }) {
     const [step, setStep] = useState("cp"); // cp | run | report | done
+    const [showGame, setShowGame] = useState(false);
     const [type, setType] = useState(null);
     const [checks, setChecks] = useState({});
     const [eos, setEos] = useState({});
